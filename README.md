@@ -117,154 +117,326 @@ criminal-network-platform/
 | **Monitoring** | Prometheus, Grafana, Structured Logging |
 
 ## 🚦 Quick Start
+# Criminal Network Intelligence Platform - Backend
+
+FastAPI-based backend for criminal network analysis with Neo4j graph database, ML-powered analytics, and multi-source document ingestion.
+
+## Quick Start
 
 ### Prerequisites
-- Docker & Docker Compose
-- 16GB+ RAM recommended
-- 50GB+ disk space
+- Python 3.11 (managed via `uv`)
+- Neo4j Community Edition 5.x
+- Valkey/Redis 7.x
 
-### 1. Clone and Configure
+### Installation (One-time)
 ```bash
-cd criminal-network-platform
-cp .env.example .env
-# Edit .env with your configuration
+# Create Python 3.11 virtual environment
+uv venv --python 3.11 ../venv
+source ../venv/bin/activate
+
+# Install dependencies
+uv pip install -r requirements.txt
+
+# Download spaCy model
+python -m spacy download en_core_web_lg
+
+# Start services
+sudo systemctl start neo4j valkey
+
+# Configure Neo4j (first run only)
+python -c "
+from neo4j import GraphDatabase
+driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'neo4j'))
+with driver.session() as session:
+    session.run('ALTER USER neo4j SET PASSWORD \"secretpassword\"')
+driver.close()
+"
+
+# Generate synthetic data
+PYTHONPATH=. python scripts/generate_synthetic_data.py 100 20 150 120 500 1000 --clear
 ```
 
-### 2. Start the Platform
+### Running the API
 ```bash
-# Start all services
-docker-compose up -d
+cd ~/criminal-network-platform/backend
+source ../venv/bin/activate
+PYTHONPATH=. python -m app.main
+```
+- **API Base**: http://localhost:8000/api/v1
+- **Interactive Docs**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
-# Or start with data initialization
-docker-compose --profile init up -d
+### Running Tests
+```bash
+cd ~/criminal-network-platform
+source venv/bin/activate
+python scripts/test_api.py
 ```
 
-### 3. Access the Platform
-- **Frontend Dashboard**: http://localhost:5173
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-- **Neo4j Browser**: http://localhost:7474
+---
 
-### 4. Initialize Sample Data
-```bash
-# Generate synthetic criminal network data
-docker-compose run --rm data-generator
+## API Structure
 
-# Or run NLP extraction on FIR reports
-docker-compose run --rm nlp-processor
+### Base URL
+```
+http://localhost:8000/api/v1
 ```
 
-## 📊 Key Features
+### Endpoints
 
-### 1. Multi-Source Data Ingestion
-- **FIR Reports** (PDF, Text, DOCX) → NLP Entity Extraction
-- **CDR Files** (CSV, Excel) → Call network construction
-- **Financial Records** → Transaction graph building
-- **Surveillance Reports** → Location-time entity linking
-- **Social Media** → OSINT entity resolution
-- **Criminal History** → Prior record integration
+#### Health & System
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | System health check (Neo4j connectivity) |
 
-### 2. Entity Extraction (NLP)
-- **People**: Names, aliases, roles
-- **Organizations**: Gangs, companies, shell companies
-- **Locations**: Addresses, GPS coordinates, landmarks
-- **Communication**: Phone numbers, emails, social handles
-- **Financial**: Bank accounts, crypto wallets, transaction IDs
-- **Vehicles**: License plates, VINs, vehicle descriptions
-- **Events**: Crimes, meetings, transactions, arrests
+#### Network Graph
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/network` | Full network graph (nodes + links) |
+| Query Params | `min_weight` (float, default 0.1), `limit` (int, default 1000) | Filter edges by weight, limit results |
 
-### 3. Graph Analytics
-- **Centrality Measures**: PageRank, Betweenness, Closeness, Eigenvector
-- **Community Detection**: Louvain, Label Propagation, Infomap
-- **Link Prediction**: Adamic-Adar, Jaccard, Preferential Attachment
-- **Subgraph Analysis**: Cliques, Motifs, Ego Networks
-- **Temporal Analysis**: Dynamic networks, Evolution patterns
+**Response**: `GraphData` - `{ nodes: GraphNode[], links: GraphLink[] }`
 
-### 4. ML-Powered Detection
-- **Anomaly Detection**: Isolation Forest, Local Outlier Factor, Graph Autoencoders
-- **Risk Scoring**: Multi-factor composite risk scores
-- **Pattern Recognition**: Structuring, Layering, Smurfing, Round-tripping
-- **Influence Analysis**: Key player identification, Network disruption simulation
+#### Analytics
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/analytics/risk-scores` | Composite risk scores for all entities |
+| GET | `/analytics/centrality` | Centrality measures (PageRank, Betweenness, Closeness, Eigenvector, Degree) |
+| GET | `/analytics/communities` | Louvain community detection |
+| GET | `/analytics/anomalies` | Structural + temporal anomalies |
+| GET | `/analytics/stats` | Network statistics |
+| POST | `/analytics/run-full-analysis` | Trigger complete analysis pipeline |
 
-### 5. Investigator Dashboard
-- **Network Visualization**: Interactive force-directed graphs (2D/3D)
-- **Timeline View**: Temporal event sequences
-- **Geospatial Map**: Entity locations and movements
-- **Risk Priority List**: Ranked suspects with evidence trails
-- **Alert Center**: Real-time suspicious activity notifications
-- **Report Generation**: Evidence packages, Network summaries
+**Query Params for Analytics**:
+- `min_weight` (float): Minimum edge weight
+- `resolution` (float, communities): Louvain resolution parameter
+- `centrality_weight`, `anomaly_weight`, `betweenness_weight` (risk-scores): Scoring weights
 
-## 🔧 Configuration
+#### Entity Search
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/entities` | Search/filter entities |
+| Query Params | `q` (str): Search query, `entity_types` (list), `limit` (int), `offset` (int) | Filtering |
 
-Key environment variables (`.env`):
+**Response**: `SearchResult` - `{ entities: Entity[], total: int, limit: int, offset: int }`
 
+#### Alerts
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/alerts` | Get generated alerts |
+| Query Params | `limit` (int), `offset` (int) | Pagination |
+
+#### Document Ingestion
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| POST | `/ingest/fir` | Ingest FIR (First Information Report) | `IngestFIRRequest` |
+| POST | `/ingest/cdr` | Ingest Call Detail Records | `IngestCDRRequest` |
+| POST | `/ingest/financial` | Ingest Financial Transactions | `IngestFinancialRequest` |
+| POST | `/ingest/surveillance` | Ingest Surveillance Logs | `IngestSurveillanceRequest` |
+
+---
+
+## Data Models
+
+### Entity Types
+```
+Person, Organization, Location, PhoneNumber, Email, BankAccount,
+Vehicle, SocialHandle, Event, Document, CryptoWallet, Other
+```
+
+### Relationship Types
+```
+OWNS, CONTACTED, TRANSFERRED_TO, ASSOCIATED_WITH, LOCATED_AT,
+PARTICIPATED_IN, MEMBER_OF, ALIAS_OF, RELATED_TO, SUSPICIOUS_LINK,
+EMPLOYED_BY, DIRECTOR_OF, COMMAND_CONTROL
+```
+
+### Key Models
+
+#### GraphNode
+```json
+{
+  "id": "uuid",
+  "label": "string",
+  "entity_type": "Person",
+  "properties": {},
+  "risk_score": 75.5,
+  "size": 25.0
+}
+```
+
+#### GraphLink
+```json
+{
+  "source": "uuid",
+  "target": "uuid",
+  "relationship_type": "OWNS",
+  "weight": 1.0,
+  "properties": { "since": "2024-01-15" }
+}
+```
+
+#### RiskScore
+```json
+{
+  "entity_id": "uuid",
+  "entity_name": "string",
+  "risk_score": 85.2,
+  "risk_level": "HIGH",
+  "contributing_factors": {
+    "centrality": 0.8,
+    "anomalies": 0.9,
+    "betweenness": 0.3
+  }
+}
+```
+
+#### Anomaly
+```json
+{
+  "entity_id": "uuid",
+  "entity_name": "string",
+  "anomaly_type": "structural_outlier",
+  "score": 3.5,
+  "description": "Unusual CONTACTED weight...",
+  "evidence": ["Edge weight: 12.5", "Z-score: 4.2"],
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+
+#### Entity (Search Result)
+```json
+{
+  "id": "uuid",
+  "name": "string",
+  "entity_type": "Person",
+  "properties": {},
+  "source_documents": ["doc1", "doc2"],
+  "confidence": 0.95,
+  "created_at": "2024-01-15T10:30:00Z",
+  "updated_at": "2024-01-15T10:30:00Z",
+  "risk_score": 75.5,
+  "centrality_scores": { "pagerank": 0.05, "betweenness": 0.02, ... }
+}
+```
+
+---
+
+## Ingestion Request Examples
+
+### FIR Ingestion
+```bash
+curl -X POST http://localhost:8000/api/v1/ingest/fir \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "FIR No. 123/2024... Accused Rahul Sharma...",
+    "document_id": "fir_001",
+    "source": "police_station_12"
+  }'
+```
+
+### CDR Ingestion
+```bash
+curl -X POST http://localhost:8000/api/v1/ingest/cdr \
+  -H "Content-Type: application/json" \
+  -d '{
+    "records": [
+      {
+        "caller": "+91-9876543210",
+        "receiver": "+91-9123456789",
+        "duration": 120,
+        "timestamp": "2024-01-15T10:30:00",
+        "call_type": "voice",
+        "cell_tower": "TWR-001",
+        "source_file": "cdr_jan_2024.csv"
+      }
+    ],
+    "source_file": "cdr_jan_2024.csv"
+  }'
+```
+
+### Financial Ingestion
+```bash
+curl -X POST http://localhost:8000/api/v1/ingest/financial \
+  -H "Content-Type: application/json" \
+  -d '{
+    "transactions": [
+      {
+        "sender_account": "ACC001",
+        "receiver_account": "ACC002",
+        "amount": 500000,
+        "currency": "INR",
+        "timestamp": "2024-01-15T11:00:00",
+        "transaction_type": "transfer",
+        "reference": "TXN123456",
+        "source_file": "bank_statements.csv"
+      }
+    ],
+    "source_file": "bank_statements.csv"
+  }'
+```
+
+---
+
+## Project Structure
+
+```
+backend/
+├── app/
+│   ├── main.py                 # FastAPI app entry point
+│   ├── core/
+│   │   └── config.py           # Configuration (Neo4j, Redis, etc.)
+│   ├── db/
+│   │   └── neo4j.py            # Neo4j driver wrapper
+│   ├── api/
+│   │   └── routes.py           # All REST endpoints
+│   ├── models/
+│   │   └── schemas.py          # Pydantic models
+│   └── services/
+│       ├── ml_engine.py        # Graph analytics (centrality, communities, anomalies, risk)
+│       ├── graph_builder.py    # Graph construction from ingested data
+│       └── nlp_extractor.py    # spaCy NER for document processing
+├── scripts/
+│   ├── generate_synthetic_data.py  # Synthetic data generator
+│   └── process_documents.py        # Batch document processing
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Configuration
+
+Environment variables (`.env` file in backend/):
 ```env
-# Neo4j
-NEO4J_URI=bolt://neo4j:7687
+NEO4J_URI=bolt://localhost:7687
 NEO4J_USER=neo4j
-NEO4J_PASSWORD=your_secure_password
-
-# Backend
-API_HOST=0.0.0.0
-API_PORT=8000
-SECRET_KEY=your_secret_key
-ALLOWED_ORIGINS=http://localhost:5173
-
-# NLP
-SPACY_MODEL=en_core_web_lg
-TRANSFORMERS_MODEL=bert-base-uncased
-
-# ML
-ANOMALY_CONTAMINATION=0.05
-RISK_SCORE_WEIGHTS='{"pagerank": 0.4, "betweenness": 0.2, "anomaly": 0.4}'
-
-# Frontend
-VITE_API_BASE=http://localhost:8000
-VITE_WS_BASE=ws://localhost:8000
+NEO4J_PASSWORD=secretpassword
+REDIS_URL=redis://localhost:6379/0
+LOG_LEVEL=INFO
 ```
 
-## 📈 API Endpoints
+---
 
-### Network Graph
-- `GET /api/v1/network` - Full network graph
-- `GET /api/v1/network/{entity_id}` - Ego network
-- `GET /api/v1/network/path/{source}/{target}` - Shortest path
+## Architecture Notes
 
-### Analytics
-- `GET /api/v1/analytics/centrality` - Centrality scores
-- `GET /api/v1/analytics/communities` - Community detection
-- `GET /api/v1/analytics/anomalies` - Detected anomalies
-- `GET /api/v1/analytics/risk-scores` - Entity risk scores
+- **Graph Storage**: Neo4j (nodes=entities, edges=relationships)
+- **Caching**: Valkey/Redis for query results
+- **NLP**: spaCy `en_core_web_lg` + custom entity ruler for Indian names, orgs, locations
+- **ML**: NetworkX for graph algorithms, scikit-learn for anomaly detection
+- **No Docker**: All services run natively via systemd
 
-### Entities
-- `GET /api/v1/entities` - List entities (paginated, filterable)
-- `GET /api/v1/entities/{id}` - Entity details with relationships
-- `POST /api/v1/entities/search` - Advanced entity search
+---
 
-### Ingestion
-- `POST /api/v1/ingest/fir` - Upload FIR document
-- `POST /api/v1/ingest/cdr` - Upload CDR file
-- `POST /api/v1/ingest/financial` - Upload financial records
-- `POST /api/v1/ingest/surveillance` - Upload surveillance report
+## Troubleshooting
 
-### Alerts
-- `GET /api/v1/alerts` - Active alerts
-- `GET /api/v1/alerts/{id}` - Alert details
-- `POST /api/v1/alerts/{id}/acknowledge` - Acknowledge alert
-
-## 🧪 Testing
-
-```bash
-# Backend tests
-cd backend && pytest -v
-
-# Frontend tests
-cd frontend && npm test
-
-# Integration tests
-docker-compose -f docker-compose.test.yml up --abort-on-container-exit
-```
-
+| Issue | Solution |
+|-------|----------|
+| `ModuleNotFoundError: app` | Run from `backend/` with `PYTHONPATH=.` |
+| Neo4j connection refused | `sudo systemctl start neo4j` |
+| `Address already in use` (port 8000) | `pkill -f "python -m app.main"` |
+| Pydantic validation errors | Check entity/relationship types match enums in `schemas.py` |
+| APOC errors | Ensure plugin installed at `/usr/share/neo4j/plugins/apoc-5.15.0-core.jar` |
 ## 📚 Documentation
 
 - [Architecture Decision Records](docs/adr/)
