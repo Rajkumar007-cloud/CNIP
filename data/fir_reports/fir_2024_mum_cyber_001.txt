@@ -1,0 +1,95 @@
+FIR Number: 2024/MUM/CYBER/001
+Date: 2024-01-15
+Police Station: Cyber Crime Police Station, Bandra-Kurla Complex, Mumbai
+
+COMPLAINANT:
+Name: Rajesh Kumar Sharma
+Age: 42
+Address: Flat 1203, Tower B, Oberoi Splendor, Jogeshwari West, Mumbai - 400102
+Phone: +91-9876543210
+Email: rajesh.sharma@techcorp.in
+PAN: ABCDE1234F
+Aadhaar: 1234 5678 9012
+
+ACCUSED PERSONS:
+1. Amit Kumar Singh (Prime Accused)
+   Age: 35
+   Address: Room 302, Sai Darshan Building, Kurla East, Mumbai
+   Phone: +91-9123456789
+   Email: amit.singh@fintech-solutions.com
+   PAN: FGHIJ5678K
+
+2. Priya Malhotra (Co-accused)
+   Age: 29
+   Address: Flat 401, Green Valley, Andheri West, Mumbai
+   Phone: +91-9988776655
+   Email: priya.m@digitalwallet.in
+
+3. Unknown persons operating shell companies
+
+INCIDENT DETAILS:
+On 2024-01-10 at approximately 14:30 hours, the complainant received a phone call from +91-9123456789. The caller identified himself as "Rahul from HDFC Bank Credit Card Department" and informed the complainant that his credit card ending in 4567 had been compromised and needed immediate verification.
+
+The caller convinced the complainant to share OTP received on his registered mobile number +91-9876543210. Within minutes, the complainant received multiple transaction alerts:
+- Rs. 1,25,000 debited from HDFC Bank Account No. 50100123456789 (IFSC: HDFC0001234)
+- Rs. 85,000 debited from same account
+- Rs. 40,000 debited from ICICI Bank Account No. 629801234567 (IFSC: ICIC0005678)
+
+Total fraudulent amount: Rs. 2,50,000
+
+The funds were transferred to:
+1. Account No. 98765432109876 (Axis Bank, IFSC: UTIB0001234) - held by "Phoenix Solutions Pvt Ltd"
+2. Account No. 11223344556677 (Kotak Mahindra Bank, IFSC: KKBK0005678) - held by "Digital Innovations LLP"
+3. Account No. 55667788990011 (Yes Bank, IFSC: YESB0009012) - held by "Quantum Technologies"
+
+INVESTIGATION FINDINGS:
+1. CDR analysis reveals frequent communication between accused phones:
+   - +91-9123456789 (Amit) ↔ +91-9988776655 (Priya): 47 calls in last 30 days
+   - +91-9123456789 ↔ +91-8877665544 (Unknown): 23 calls
+   - +91-9988776655 ↔ +91-7766554433 (Unknown): 15 calls
+
+2. Financial trail analysis:
+   - Funds from victim accounts → Phoenix Solutions Pvt Ltd (Shell company, CIN: U72900MH2020PTC123456)
+   - Phoenix Solutions → Digital Innovations LLP → Quantum Technologies → Multiple crypto wallets
+   - Crypto wallets identified: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa, 0x742d35Cc6634C0532925a3b844Bc9e7595f8fEb7
+
+3. Shell company network:
+   - Phoenix Solutions Pvt Ltd (Directors: Amit Kumar Singh, Priya Malhotra)
+   - Digital Innovations LLP (Partners: Amit Kumar Singh)
+   - Quantum Technologies (Director: Rajesh Gupta - nominee)
+   - All registered at same address: 302, Sai Darshan Building, Kurla East
+
+4. Vehicle linked to accused:
+   - MH-02-AB-1234 (Hyundai Creta, 2022) - Registered to Amit Kumar Singh
+   - MH-02-CD-5678 (Maruti Brezza, 2021) - Registered to Priya Malhotra
+
+5. Locations of interest:
+   - Sai Darshan Building, Kurla East (Operational base)
+   - Cyber Cafe "NetZone", Andheri Station (Used for VOIP calls)
+   - Hotel Sea View, Juhu (Meeting point for cash handovers)
+
+EVIDENCE COLLECTED:
+- CDR records from tower BLR-042, BLR-087, BLR-156
+- Bank statements from HDFC, ICICI, Axis, Kotak, Yes Bank
+- Company registration documents from MCA
+- CCTV footage from NetZone Cyber Cafe, Hotel Sea View
+- Mobile devices seized from accused (IMEI: 356789012345678, 356789012345679)
+- Crypto wallet access credentials from seized devices
+
+SECTIONS OF LAW APPLIED:
+- Section 420 IPC (Cheating)
+- Section 467, 468, 471 IPC (Forgery)
+- Section 66C, 66D IT Act (Identity theft, Cheating by personation)
+- Section 3 PMLA (Money Laundering)
+
+STATUS: Investigation in progress. Accused Amit Kumar Singh and Priya Malhotra arrested on 2024-01-13. Search for third accused ongoing. Freezing order obtained for 12 bank accounts and 3 crypto wallets.
+
+INVESTIGATING OFFICER:
+Inspector Vikram Rathore
+Cyber Crime Police Station, BKC
+Phone: +91-22-2654XXXX
+Email: vikram.rathore@mahapolice.gov.in
+
+SUPERVISING OFFICER:
+ACP (Cyber) Sunil Deshmukh
+Zone 8, Mumbai Police

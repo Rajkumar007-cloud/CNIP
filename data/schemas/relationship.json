@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Relationship Schema",
+  "description": "Schema for relationships in the criminal network knowledge graph",
+  "type": "object",
+  "required": ["id", "source_id", "target_id", "relationship_type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the relationship"
+    },
+    "source_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Source entity ID"
+    },
+    "target_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Target entity ID"
+    },
+    "relationship_type": {
+      "type": "string",
+      "enum": [
+        "OWNS", "CONTACTED", "TRANSFERRED_TO", "ASSOCIATED_WITH",
+        "LOCATED_AT", "PARTICIPATED_IN", "MEMBER_OF", "ALIAS_OF",
+        "RELATED_TO", "SUSPICIOUS_LINK"
+      ],
+      "description": "Type of relationship"
+    },
+    "properties": {
+      "type": "object",
+      "description": "Flexible key-value properties specific to relationship type",
+      "additionalProperties": true
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0,
+      "default": 1.0,
+      "description": "Relationship strength/weight"
+    },
+    "source_documents": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of source document IDs that reference this relationship"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+FIR Number: 2024/DEL/ECON/045
+Date: 2024-02-20
+Police Station: Economic Offences Wing, Mandir Marg, New Delhi
+
+COMPLAINANT:
+Name: Punjab National Bank, Corporate Branch
+Authorized Signatory: Mr. Sanjay Verma, Chief Manager
+Address: PNB House, 17 Parliament Street, New Delhi - 110001
+Phone: +91-11-23456789
+
+ACCUSED PERSONS:
+1. Nirav Modi (Absconding)
+   Passport: Z1234567
+   Known Associates: Mehul Choksi, Amit Shah (not the politician)
+
+2. Mehul Choksi (Absconding)
+   Citizenship: Antigua & Barbuda
+   Passport: A1234567
+
+3. Vipul Ambani (Arrested)
+   Position: President (Finance), Firestar Diamond
+   Phone: +91-9811001100
+   PAN: AAAPV1234R
+
+4. 15+ Bank Officials (Under Investigation)
+   Including: Gokulnath Shetty (Retired Deputy Manager, PNB Brady House)
+
+INCIDENT DETAILS:
+Fraudulent issuance of Letters of Undertakings (LoUs) and Foreign Letters of Credit (FLCs) 
+by Punjab National Bank, Brady House Branch, Mumbai, favoring firms belonging to 
+Nirav Modi and Mehul Choksi groups, without entering into Core Banking Solution (CBS).
+
+MODUS OPERANDI:
+1. Accused approached PNB Brady House Branch for Buyer's Credit
+2. Bank officials (led by Gokulnath Shetty) issued LoUs/FLCs without CBS entry
+3. LoUs transmitted via SWIFT to overseas banks
+4. Overseas banks released funds to Nirav Modi/Mehul Choksi firms
+5. No collateral or margin maintained
+6. LoUs rolled over repeatedly since 2011
+
+FINANCIAL IMPACT:
+Total Exposure: Rs. 13,578 Crores (approx $1.8 Billion)
+- Nirav Modi Group: Rs. 6,498 Crores
+- Mehul Choksi Group: Rs. 7,080 Crores
+
+KEY ENTITIES IDENTIFIED:
+Firms/Companies:
+1. Firestar Diamond International Pvt Ltd (CIN: U36911MH2005PTC123456)
+2. Firestar Diamond FZE (Dubai)
+3. Solar Exports (Partnership)
+4. Stellar Diamonds (Partnership)
+5. Diamond R US (Hong Kong)
+6. A Jaffe (USA)
+
+Bank Accounts:
+- PNB Brady House: 006005001234 (Nostro Account)
+- Allahabad Bank Hong Kong: USD Nostro
+- Axis Bank Hong Kong: USD Nostro
+- Union Bank of India Hong Kong: USD Nostro
+- Multiple accounts in India across PNB, Allahabad Bank, Axis Bank
+
+Shell Companies (India):
+1. Aadarsh Impex Pvt Ltd
+2. Aakar Impex Pvt Ltd
+3. Aagam Impex Pvt Ltd
+4. Aanchal Impex Pvt Ltd
+(All registered at same address: 3rd Floor, Peninsula Business Park, Lower Parel, Mumbai)
+
+SWIFT Messages:
+- MT799 (Free Format Message) used for LoU transmission
+- SWIFT codes: PUNBINBBXXX, ALLAINBBXXX, UTIBINBBXXX
+- 1,200+ SWIFT messages identified
+
+PROPERTIES ATTACHED:
+1. Farmhouse at Alibaug (Rs. 25 Cr)
+2. Flat at Samudra Mahal, Worli (Rs. 45 Cr)
+3. Office at BKC, Mumbai (Rs. 120 Cr)
+4. Properties in Dubai, Hong Kong, New York, London
+
+VEHICLES SEIZED:
+- Rolls Royce Ghost (MH-01-AA-0001)
+- Mercedes Maybach (MH-01-BB-0002)
+- Porsche Panamera (MH-01-CC-0003)
+- Multiple other luxury vehicles
+
+COMMUNICATION ANALYSIS:
+- 500+ calls between key accused in 6 months before detection
+- VoIP calls from Dubai, Hong Kong, Antwerp
+- Encrypted messaging apps used: Signal, Telegram, WhatsApp Business
+
+MONEY LAUNDERING TRAIL:
+India → Hong Kong → Dubai → Belgium (Antwerp) → USA → UK → Switzerland
+Layering through 100+ shell companies across 15 jurisdictions
+Final integration: Real estate, art, luxury goods, private equity
+
+STATUS:
+- Red Corner Notice issued for Nirav Modi, Mehul Choksi
+- Extradition proceedings initiated in UK (Nirav) and Antigua (Mehul)
+- 25+ bank officials suspended/arrested
+- Assets worth Rs. 4,500 Crores attached
+- Supplementary charge sheet filed
+
+INVESTIGATING AGENCY:
+CBI (ACB), Mumbai / ED (Enforcement Directorate) / SFIO
+
+INVESTIGATING OFFICER:
+DSP R. K. Singh, CBI ACB Mumbai
+Phone: +91-22-2202XXXX
