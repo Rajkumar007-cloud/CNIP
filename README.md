@@ -116,6 +116,32 @@ criminal-network-platform/
 | **Deployment** | Docker, Docker Compose, Kubernetes-ready |
 | **Monitoring** | Prometheus, Grafana, Structured Logging |
 
+# Backend Requirements
+fastapi==0.115.0
+uvicorn==0.32.0
+pydantic==2.10.0
+pydantic-settings==2.6.0
+python-dotenv==1.0.1
+neo4j==5.26.0
+pandas==2.2.0
+numpy>=1.23.2,<2
+scikit-learn==1.5.0
+networkx==3.4
+spacy==3.8.0
+transformers==4.46.0
+python-multipart==0.0.9
+httpx==0.28.0
+redis==5.2.0
+celery==5.4.0
+flower==2.0.1
+prometheus-client==0.20.0
+structlog==25.1.0
+python-json-logger==2.0.7
+pytest==8.3.0
+pytest-asyncio==0.24.0
+Faker==40.39.0
+python-louvain==0.16
+
 ## 🚦 Quick Start
 # Criminal Network Intelligence Platform - Backend
 
